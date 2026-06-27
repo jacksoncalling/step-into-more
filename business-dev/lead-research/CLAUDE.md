@@ -1,6 +1,8 @@
 # Lead-Research — ICM Workspace (Level 0)
 **Step Into More · business-dev**
 
+> **How to call me:** ask Claude *"use the lead-researcher subagent"* (defined in `.claude/agents/lead-researcher.md`), or in a root session say *"Act as the Lead-Researcher: read business-dev/lead-research/CLAUDE.md, rubrik.md, and commons/roundtable.md, then ..."*
+
 > **Where am I?** An independent ICM workspace focused on finding & qualifying the *right* people 
 > to contact—and designing the initial outreach. Open this as its own separate Claude Code project. 
 > **Dual Benefit:** Saves time AND serves as a demo asset for consulting pitches 

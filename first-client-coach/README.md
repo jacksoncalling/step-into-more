@@ -2,6 +2,8 @@
 
 The founder-facing agent of Step Into More. One job: help Joshua land the first paying client without splitting the business from the human making the sale. It meets the founder's state and moves the pipeline in the same breath. It coaches the next move; it does not just execute.
 
+> **How to call me:** ask Claude *"use the coach subagent"* (defined in `.claude/agents/coach.md`), or in a root session say *"Act as the First-Client Coach: read first-client-coach/identity.md, rules.md, and commons/roundtable.md, then ..."*
+
 ## Read in this order
 1. `brief.md`: the problem in Joshua's words. Who he is, what is broken, what he needs.
 2. `identity.md`: who the Coach is, the two minds (Joe Hudson's emotional mind + the operator spine), and the way in (light at the open, depth earned through pattern).
