@@ -24,6 +24,12 @@ They share two things and nothing else: the **[Positioning Canon](positioning-ca
 3. The agent reads its files, the canon, and the Commons, then works.
 4. Every outward action (send, publish, book) waits for my explicit yes. The human gate always holds.
 
+## Make it yours
+Want to run this with your own practice? The engine (the four agents, the method, the structure) is
+reusable; only the personal layer changes. See [`setup/SETUP.md`](setup/SETUP.md), then open Claude
+and say *"use the setup subagent"*. The Onboarding Guide interviews you over a few sessions and builds
+your voice, canon, offers, segments, and first contacts, one step at a time.
+
 ## See it
 - Live: [ace-client-finder.lovable.app](https://ace-client-finder.lovable.app)
 - Demo video: (link coming)

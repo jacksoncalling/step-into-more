@@ -52,6 +52,7 @@ Education, transperancy and respect are essential components of a successful tra
 | See the whole team's state + open handoffs | `commons/` | `roundtable.md` |
 | See what tools/skills an agent has | each agent's folder | its `tools.md` |
 | Call an agent as a subagent | `.claude/agents/` | coach · marketing-maker · lead-researcher · connector |
+| Set this system up with your own content | `setup/` | `SETUP.md` (or "use the setup subagent") |
 | Build the Sensing System product | `~/sensing-system/` | its local `README.md` |
 | Access Limina product design | `~/Documents/Limina/` | — |
 | Find new clients / manage sales pipeline | `business-dev/` | `business-dev/CONTEXT.md` |
