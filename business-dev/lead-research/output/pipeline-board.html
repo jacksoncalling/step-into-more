@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lead-Research Pipeline — Step Into More</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-2: #1e222b;
+    --line: #2a2f3a;
+    --text: #e6e9ef;
+    --muted: #9aa3b2;
+    --accent: #6ee7b7;
+    --gate: #f59e0b;
+    --avgs: #60a5fa;   /* AVGS providers */
+    --kmu: #c084fc;    /* KMU / administration */
+    --hot: #f87171;
+    --warm: #fbbf24;
+    --cold: #6b7280;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    padding: 20px 24px 12px; border-bottom: 1px solid var(--line);
+  }
+  h1 { margin: 0 0 4px; font-size: 18px; letter-spacing: .2px; }
+  .sub { color: var(--muted); font-size: 12.5px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .board { display: flex; gap: 14px; padding: 18px 24px 40px; overflow-x: auto; align-items: flex-start; }
+  .col {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    min-width: 240px; width: 240px; flex: 0 0 auto;
+  }
+  .col-head {
+    padding: 12px 14px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 600; font-size: 13px;
+  }
+  .col-head .count { color: var(--muted); font-weight: 500; }
+  .gate-col .col-head { color: var(--gate); }
+  .gate-tag {
+    font-size: 10px; color: var(--gate); border: 1px solid var(--gate);
+    border-radius: 6px; padding: 1px 6px; margin-left: 6px; white-space: nowrap;
+  }
+  .col-body { padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 30px; }
+  .card {
+    background: var(--panel-2); border: 1px solid var(--line); border-left-width: 3px;
+    border-radius: 9px; padding: 10px 11px; cursor: default;
+  }
+  .card .who { font-weight: 600; font-size: 13px; }
+  .card .role { color: var(--muted); font-size: 11.5px; margin-bottom: 6px; }
+  .card .meta { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 7px; }
+  .badge { font-size: 10px; padding: 1px 7px; border-radius: 20px; border: 1px solid var(--line); }
+  .badge.seg-avgs { color: var(--avgs); border-color: var(--avgs); }
+  .badge.seg-kmu  { color: var(--kmu);  border-color: var(--kmu); }
+  .badge.score-hot  { color: var(--hot);  border-color: var(--hot); }
+  .badge.score-warm { color: var(--warm); border-color: var(--warm); }
+  .badge.score-cold { color: var(--cold); border-color: var(--cold); }
+  .badge.door { color: var(--accent); border-color: var(--accent); }
+  .card .hook { font-size: 11.5px; color: var(--text); opacity: .85; margin-bottom: 6px; }
+  .card .next { font-size: 11px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; }
+  .card .next b { color: var(--text); font-weight: 600; }
+  .empty { color: var(--muted); font-size: 11.5px; font-style: italic; padding: 4px 2px; }
+  .example-note {
+    margin: 0 24px 8px; padding: 8px 12px; background: rgba(245,158,11,.08);
+    border: 1px dashed var(--gate); border-radius: 8px; color: var(--gate); font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Lead-Research Pipeline · Step Into More</h1>
+  <div class="sub">
+    A human-gated outreach loop. The agent researches, qualifies, and drafts; <b>you</b> hold the
+    gate at every <span style="color:var(--gate)">🚪 Send</span> and <span style="color:var(--gate)">🚪 Book</span>.
+    This board is a live view of the contact cards on disk. · Last updated: <span id="updated">—</span>
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--avgs)"></i> AVGS providers</span>
+    <span><i class="dot" style="background:var(--kmu)"></i> KMU / administration</span>
+    <span><i class="dot" style="background:var(--hot)"></i> Hot (9–12)</span>
+    <span><i class="dot" style="background:var(--warm)"></i> Warm (6–8)</span>
+    <span><i class="dot" style="background:var(--cold)"></i> Cold / Champion (≤5)</span>
+    <span style="color:var(--gate)">🚪 = human gate</span>
+  </div>
+</header>
+
+<div class="example-note" id="exampleNote" style="display:none;">
+  This board currently shows an <b>example card</b> so you can see the layout. Replace
+  <code>pipelineData</code> in the source with your real contacts (or let the operator do it).
+</div>
+
+<div class="board" id="board"></div>
+
+<script>
+/* =====================================================================
+   PIPELINE STATE
+   ---------------------------------------------------------------------
+   This array is the board's data. It mirrors the `Status` field on each
+   contact card in 03_ansprache/ergebnisse/.
+
+   The operator updates this array when a contact changes stage:
+     - add an object when a contact is qualified (status "research")
+     - change `status` as the contact moves through the loop
+     - update `next` (the next action + date)
+
+   status values  ->  column
+     "research"   ->  To Research
+     "drafted"    ->  Drafted
+     "sent"       ->  Sent          (🚪 you sent it)
+     "replied"    ->  Replied
+     "meeting"    ->  Meeting Set    (🚪 you booked it)
+   side states (shown muted under their nearest column):
+     "nurture"    ->  Warm, waiting for a harder signal
+     "declined"   ->  Closed (no / unsubscribe)
+
+   segment: "avgs" | "kmu"
+   score:   "hot" | "warm" | "cold"
+   door:    short label, e.g. "ICM Wedge" | "Consulting→Limina"
+   ===================================================================== */
+const pipelineData = [
+  {
+    who: "GFN · Product-Ops lead",
+    role: "Product Mgmt / Operations · Heidelberg HQ",
+    org: "GFN GmbH (Heidelberg)",
+    segment: "avgs",
+    score: "hot",
+    door: "Consulting→Limina",
+    hook: "Signal: GFN fährt KI-Führerschein + KI-Coaching. Wedge: ICM ohne neue Plattform, volle Datenhoheit.",
+    status: "sent",
+    sent: "2026-06-23",
+    next: "Sent 2026-06-23 (pattern address, unconfirmed). No reply yet → Day-7 value-add follow-up 2026-06-30."
+  },
+  {
+    who: "GFN · Standort-Coach",
+    role: "Standort-Coach · Aachen (Champion/Intel, kein Buyer)",
+    org: "GFN GmbH (Standort Aachen)",
+    segment: "avgs",
+    score: "warm",
+    door: "Consulting→ICM-Reframe",
+    hook: "Job-fair contact. Relayed central NO ('eigene Produkte'). Reframe: ICM ist kein Produkt, läuft auf bestehenden Tools.",
+    status: "declined",
+    sent: "2026-06-24",
+    next: "Gracious thank-you + ICM-reframe + link drafted 2026-06-24. Josh sends. No further push; keep warm. Central path stays on the Product-Ops thread."
+  },
+  {
+    who: "alfatraining · Founder/CEO",
+    role: "Founder & CEO · Karlsruhe HQ (alfatraining/alfaview/Semanux group)",
+    org: "alfatraining Bildungszentrum GmbH",
+    segment: "avgs",
+    score: "hot",
+    door: "ICM (intern) + Limina",
+    hook: "Alumni arc: Dozent's agile enthusiasm → 'Daily of the Month' podcast → AI for learning communities. Insight: teaches AI, doesn't use it internally (freelance trainers reinvent research).",
+    status: "sent",
+    sent: "2026-06-24",
+    next: "Sent 2026-06-24 (pattern guess, no bounce → valid). Josh shortened for CEO. No reply → value-add follow-up ~2026-07-01."
+  },
+  {
+    who: "IU Akademie · Geschäftsfeldentwicklung lead",
+    role: "Geschäftsfeldentwicklung · Relationship Mgr Agentur für Arbeit",
+    org: "IU Akademie / IU Internationale Hochschule",
+    segment: "avgs",
+    score: "hot",
+    door: "Limina (Teilnehmer-Orientierung) + ICM",
+    hook: "His remit: Agentur-für-Arbeit relationship + AVGS market expansion. Limina = orientation differentiator upstream of enrollment; Syntea nod defuses the 'eigene Produkte' objection.",
+    status: "drafted",
+    sent: "",
+    next: "Gmail draft ready (pattern verified). Josh review + send. Then Day-7 follow-up if no reply."
+  }
+];
+
+const COLUMNS = [
+  { key: "research", label: "To Research",  gate: false },
+  { key: "drafted",  label: "Drafted",      gate: false },
+  { key: "sent",     label: "Sent",         gate: true, gateText: "you send" },
+  { key: "replied",  label: "Replied",      gate: false },
+  { key: "meeting",  label: "Meeting Set",  gate: true, gateText: "you book" },
+  { key: "declined", label: "Closed",       gate: false },
+];
+
+function cardHTML(c) {
+  const segClass = c.segment === "avgs" ? "seg-avgs" : "seg-kmu";
+  const segLabel = c.segment === "avgs" ? "AVGS" : "KMU";
+  const scoreClass = "score-" + (c.score || "cold");
+  const scoreLabel = (c.score || "cold").toUpperCase();
+  const borderColor = c.segment === "avgs" ? "var(--avgs)" : "var(--kmu)";
+  return `
+    <div class="card" style="border-left-color:${borderColor}">
+      <div class="who">${c.who}</div>
+      <div class="role">${c.role || ""}${c.org ? " · " + c.org : ""}</div>
+      <div class="meta">
+        <span class="badge ${segClass}">${segLabel}</span>
+        <span class="badge ${scoreClass}">${scoreLabel}</span>
+        ${c.door ? `<span class="badge door">${c.door}</span>` : ""}
+      </div>
+      ${c.hook ? `<div class="hook">${c.hook}</div>` : ""}
+      ${c.next ? `<div class="next"><b>Next:</b> ${c.next}</div>` : ""}
+    </div>`;
+}
+
+function render() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  let hasExample = false;
+  COLUMNS.forEach(col => {
+    const items = pipelineData.filter(c => c.status === col.key);
+    if (items.some(c => c.example)) hasExample = true;
+    const el = document.createElement("div");
+    el.className = "col" + (col.gate ? " gate-col" : "");
+    el.innerHTML = `
+      <div class="col-head">
+        <span>${col.gate ? "🚪 " : ""}${col.label}
+          ${col.gate ? `<span class="gate-tag">${col.gateText}</span>` : ""}
+        </span>
+        <span class="count">${items.length}</span>
+      </div>
+      <div class="col-body">
+        ${items.length ? items.map(cardHTML).join("") : '<div class="empty">—</div>'}
+      </div>`;
+    board.appendChild(el);
+  });
+  document.getElementById("updated").textContent =
+    new Date().toISOString().slice(0, 10);
+  document.getElementById("exampleNote").style.display = hasExample ? "block" : "none";
+}
+render();
+</script>
+</body>
+</html>

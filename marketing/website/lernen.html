@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI-Kompetenz aufbauen · Step Into More</title>
+<meta name="description" content="Von ersten Beobachtungen bis zum eigenen Organisationssystem. Drei Phasen, wachsende Wirkung. Step Into More begleitet Sie, egal wo Sie gerade stehen.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --ink: #16181d;
+    --ink-soft: #21252c;
+    --paper: #faf7f1;
+    --paper-2: #f3eee3;
+    --line: #e7e0d2;
+    --amber: #e8a33d;
+    --amber-deep: #c47e1e;
+    --text: #20242b;
+    --text-mid: #4d535d;
+    --text-light: #80868f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text); background: var(--paper); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+  a { color: inherit; }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 50; background: rgba(22,24,29,0.96);
+    backdrop-filter: blur(8px); color: #fff;
+  }
+  .nav-inner { max-width: 1000px; margin: 0 auto; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { color: #fff; display: flex; align-items: center; }
+  .nav-logo svg { height: 80px; width: auto; }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .nav-link { color: rgba(255,255,255,0.72); font-size: 14px; font-weight: 600; text-decoration: none; letter-spacing: 0.2px; }
+  .nav-link:hover { color: #fff; }
+  .nav-link.active { color: var(--amber); }
+  .nav-cta {
+    background: var(--amber); color: var(--ink); font-weight: 700; font-size: 13px;
+    padding: 9px 18px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+  }
+  .nav-cta:hover { background: #f2b455; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: #fff; padding: 80px 0 88px; }
+  .hero .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 18px; }
+  .hero h1 { font-size: 46px; font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 20px; max-width: 680px; }
+  .hero .sub { font-size: 18px; line-height: 1.65; color: rgba(255,255,255,0.8); max-width: 580px; }
+
+  /* SECTIONS */
+  section.block { padding: 72px 0; }
+  section.block.alt { background: var(--paper-2); }
+  .eyebrow-d { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 12px; }
+  h2.s { font-size: 32px; font-weight: 800; color: var(--ink); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.3px; }
+  .lead { font-size: 17px; color: var(--text-mid); line-height: 1.7; max-width: 720px; margin-bottom: 48px; }
+
+  /* STAGE CARDS */
+  .stages { display: flex; flex-direction: column; gap: 16px; }
+  .stage { display: grid; grid-template-columns: 72px 1fr; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #fff; }
+  .stage-num {
+    background: var(--ink); color: var(--amber);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 900;
+  }
+  .stage-body { padding: 32px 36px; }
+  .stage-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; }
+  .stage-title { font-size: 24px; font-weight: 800; color: var(--ink); margin-bottom: 12px; }
+  .stage-desc { font-size: 15px; color: var(--text-mid); line-height: 1.75; margin-bottom: 22px; }
+  .stage-gains { background: var(--paper-2); border-radius: 10px; padding: 18px 22px; }
+  .gains-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 12px; }
+  .gains-label span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-light); font-size: 11px; }
+  .stage-gains ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .stage-gains li { font-size: 14.5px; color: var(--text); font-weight: 500; padding-left: 22px; position: relative; line-height: 1.5; }
+  .stage-gains li::before { content: "→"; position: absolute; left: 0; color: var(--amber-deep); font-weight: 700; }
+
+  /* CONNECTOR ARROW */
+  .stage-arrow { text-align: center; font-size: 22px; color: var(--line); line-height: 1; padding: 4px 0; }
+
+  /* SIGNAL SECTION */
+  .signal { border: 1.5px solid var(--line); border-radius: 16px; padding: 36px 40px; background: #fff; margin-top: 12px; }
+  .signal h3 { font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+  .signal p { font-size: 15px; color: var(--text-mid); line-height: 1.75; }
+
+  /* CTA */
+  .cta-block { background: var(--ink); color: #fff; padding: 76px 0; }
+  .cta-block h2 { font-size: 30px; font-weight: 800; margin-bottom: 10px; }
+  .cta-block h2 .amber { color: var(--amber); }
+  .cta-block .sub { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 480px; line-height: 1.65; margin-bottom: 36px; }
+  .interest-form { max-width: 420px; }
+  .interest-form .field { margin-bottom: 12px; }
+  .interest-form label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.65); margin-bottom: 5px; }
+  .interest-form input {
+    width: 100%; padding: 12px 14px; border: 1.5px solid rgba(255,255,255,0.18); border-radius: 8px;
+    background: rgba(255,255,255,0.08); color: #fff; font-family: inherit; font-size: 15px; transition: border-color .15s;
+  }
+  .interest-form input:focus { outline: none; border-color: var(--amber); }
+  .interest-form input::placeholder { color: rgba(255,255,255,0.35); }
+  .interest-form .btn-send {
+    width: 100%; padding: 14px; background: var(--amber); color: var(--ink); font-weight: 700;
+    font-size: 15px; border: none; border-radius: 10px; cursor: pointer; font-family: inherit; margin-top: 6px; transition: background .15s;
+  }
+  .interest-form .btn-send:hover { background: #f2b455; }
+  .interest-form .note { font-size: 12.5px; color: rgba(255,255,255,0.38); margin-top: 10px; }
+
+  /* FOOTER */
+  .footer { background: #0e1014; color: rgba(255,255,255,0.5); padding: 30px 0; }
+  .footer-inner { max-width: 1000px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .footer-logo { color: #fff; }
+  .footer-logo svg { height: 46px; width: auto; }
+  .footer .meta { font-size: 12.5px; text-align: right; line-height: 1.8; }
+  .footer .meta a { color: rgba(255,255,255,0.7); text-decoration: none; }
+
+  @media (max-width: 820px) {
+    .hero h1 { font-size: 32px; }
+    .hero .sub { font-size: 16px; }
+    .stage { grid-template-columns: 52px 1fr; }
+    .stage-num { font-size: 20px; }
+    .stage-body { padding: 24px 20px; }
+    .signal { padding: 28px 24px; }
+    h2.s { font-size: 26px; }
+  }
+</style>
+<link rel="icon" href="favicons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="favicons/favicon.ico" sizes="any">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="Step Into More">
+      <svg viewBox="0 0 210 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M178.1 67.5 A80 80 0 0 1 38.9 145.0" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <path d="M33.7 136.2 A80 80 0 0 1 136.3 26.4" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <circle cx="36.5" cy="140.5" r="5.2" stroke="currentColor" stroke-width="2.3" fill="none"/>
+        <path d="M174.9 31.3 L130.2 45.9 L166.8 55.7 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M154.6 52.4 L166.8 55.7 L161.1 72.8 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M78.13 85.81Q76.01 85.81 74.45 85.14Q72.88 84.47 72.00 83.22Q71.12 81.97 71.03 80.24H73.93Q74.03 81.27 74.60 81.95Q75.18 82.62 76.11 82.95Q77.03 83.28 78.11 83.28Q79.31 83.28 80.25 82.90Q81.19 82.52 81.73 81.83Q82.27 81.14 82.27 80.24Q82.27 79.41 81.80 78.88Q81.33 78.36 80.52 78.01Q79.71 77.66 78.69 77.39L76.47 76.78Q74.15 76.16 72.85 74.94Q71.55 73.72 71.55 71.78Q71.55 70.14 72.43 68.91Q73.32 67.68 74.83 67.01Q76.35 66.33 78.25 66.33Q80.20 66.33 81.68 67.01Q83.15 67.69 84.00 68.87Q84.84 70.05 84.89 71.56H82.06Q81.92 70.26 80.86 69.55Q79.80 68.84 78.19 68.84Q77.05 68.84 76.21 69.20Q75.36 69.56 74.90 70.19Q74.44 70.81 74.44 71.62Q74.44 72.51 74.99 73.06Q75.54 73.62 76.34 73.94Q77.13 74.26 77.85 74.45L79.68 74.94Q80.59 75.16 81.55 75.55Q82.50 75.94 83.32 76.56Q84.13 77.17 84.64 78.08Q85.14 78.99 85.14 80.27Q85.14 81.87 84.31 83.13Q83.49 84.38 81.92 85.10Q80.35 85.81 78.13 85.81Z M89.13 69.08V66.58H103.81V69.08H97.93V85.50H95.03V69.08Z M108.55 85.50V66.58H120.45V69.08H111.45V74.71H119.82V77.19H111.45V83.01H120.54V85.50Z M125.73 85.50V66.58H132.50Q134.69 66.58 136.15 67.39Q137.60 68.21 138.33 69.59Q139.06 70.98 139.06 72.72Q139.06 74.48 138.33 75.87Q137.60 77.26 136.14 78.07Q134.68 78.88 132.48 78.88H127.85V76.42H132.20Q133.59 76.42 134.46 75.94Q135.33 75.46 135.73 74.62Q136.13 73.79 136.13 72.72Q136.13 71.66 135.73 70.83Q135.33 70.01 134.45 69.53Q133.58 69.06 132.18 69.06H128.63V85.50Z" fill="currentColor"/>
+        <path d="M75.92 94.28V113.20H73.02V94.28Z M81.60 113.20V94.28H84.94L92.06 105.54Q92.41 106.10 92.86 106.88Q93.30 107.66 93.80 108.62Q94.30 109.59 94.78 110.74H94.42Q94.32 109.66 94.26 108.60Q94.20 107.53 94.17 106.61Q94.15 105.69 94.15 105.05V94.28H97.08V113.20H93.72L87.34 103.13Q86.83 102.30 86.34 101.47Q85.85 100.63 85.26 99.54Q84.67 98.44 83.82 96.86H84.28Q84.35 98.26 84.41 99.47Q84.47 100.69 84.50 101.62Q84.54 102.55 84.54 103.11V113.20Z M101.82 96.78V94.28H116.50V96.78H110.62V113.20H107.72V96.78Z M129.12 113.45Q126.67 113.45 124.74 112.29Q122.80 111.13 121.69 108.95Q120.58 106.78 120.58 103.75Q120.58 100.72 121.69 98.54Q122.80 96.37 124.74 95.20Q126.67 94.03 129.12 94.03Q131.57 94.03 133.50 95.20Q135.43 96.37 136.54 98.54Q137.65 100.72 137.65 103.75Q137.65 106.78 136.54 108.95Q135.43 111.13 133.50 112.29Q131.57 113.45 129.12 113.45ZM129.12 110.82Q130.74 110.82 132.01 110.01Q133.29 109.19 134.03 107.62Q134.77 106.04 134.77 103.75Q134.77 101.45 134.03 99.87Q133.29 98.29 132.01 97.48Q130.74 96.67 129.12 96.67Q127.50 96.67 126.22 97.48Q124.94 98.30 124.19 99.88Q123.45 101.46 123.45 103.75Q123.45 106.04 124.19 107.61Q124.94 109.18 126.22 110.00Q127.50 110.82 129.12 110.82Z" fill="currentColor"/>
+        <path d="M66.75 140.70V121.78H71.02L75.15 132.63Q75.32 133.12 75.54 133.86Q75.76 134.60 76.01 135.46Q76.25 136.32 76.47 137.16Q76.68 138.00 76.84 138.67H76.23Q76.40 138.03 76.62 137.20Q76.84 136.38 77.08 135.51Q77.32 134.64 77.55 133.88Q77.77 133.13 77.95 132.63L82.02 121.78H86.30V140.70H83.42V130.52Q83.42 129.93 83.43 129.12Q83.44 128.31 83.46 127.41Q83.49 126.50 83.51 125.57Q83.53 124.64 83.54 123.79H83.76Q83.50 124.72 83.20 125.70Q82.90 126.68 82.61 127.59Q82.33 128.51 82.07 129.27Q81.81 130.03 81.63 130.52L77.76 140.70H75.28L71.36 130.52Q71.18 130.04 70.93 129.29Q70.68 128.55 70.39 127.65Q70.09 126.74 69.79 125.75Q69.49 124.76 69.18 123.79H69.44Q69.46 124.57 69.48 125.48Q69.50 126.39 69.52 127.31Q69.54 128.23 69.55 129.06Q69.57 129.90 69.57 130.52V140.70Z M99.86 140.95Q97.41 140.95 95.48 139.79Q93.54 138.63 92.43 136.45Q91.32 134.28 91.32 131.25Q91.32 128.22 92.43 126.04Q93.54 123.87 95.48 122.70Q97.41 121.53 99.86 121.53Q102.31 121.53 104.24 122.70Q106.17 123.87 107.28 126.04Q108.39 128.22 108.39 131.25Q108.39 134.28 107.28 136.45Q106.17 138.63 104.24 139.79Q102.31 140.95 99.86 140.95ZM99.86 138.32Q101.48 138.32 102.75 137.51Q104.03 136.69 104.77 135.12Q105.51 133.54 105.51 131.25Q105.51 128.95 104.77 127.37Q104.03 125.79 102.75 124.98Q101.48 124.17 99.86 124.17Q98.24 124.17 96.96 124.98Q95.68 125.80 94.93 127.38Q94.19 128.96 94.19 131.25Q94.19 133.54 94.93 135.11Q95.68 136.68 96.96 137.50Q98.24 138.32 99.86 138.32Z M113.41 140.70V121.78H120.19Q122.38 121.78 123.83 122.54Q125.29 123.30 126.01 124.64Q126.74 125.98 126.74 127.73Q126.74 129.48 126.01 130.79Q125.28 132.11 123.82 132.83Q122.36 133.56 120.16 133.56H115.07V131.08H119.88Q121.28 131.08 122.14 130.68Q123.00 130.28 123.40 129.53Q123.81 128.78 123.81 127.73Q123.81 126.66 123.40 125.88Q123.00 125.11 122.13 124.69Q121.27 124.26 119.86 124.26H116.31V140.70ZM124.16 140.70 119.58 132.15H122.79L127.46 140.70Z M131.76 140.70V121.78H143.66V124.28H134.66V129.91H143.03V132.39H134.66V138.21H143.75V140.70Z" fill="currentColor"/>
+      </svg>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="index.html">Startseite</a>
+      <a class="nav-link active" href="lernen.html">Lernen</a>
+      <a class="nav-cta" href="index.html#kontakt">Gespräch vereinbaren</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">KI-Kompetenz aufbauen</div>
+    <h1>Wo stehen Sie gerade mit KI?</h1>
+    <p class="sub">
+      Die meisten Unternehmen durchlaufen dieselben Phasen. Wer weiß, wo er steht,
+      kann gezielt investieren. Und jede Phase hat echte, konkrete Ergebnisse.
+    </p>
+  </div>
+</header>
+
+<!-- STAGES -->
+<section class="block">
+  <div class="wrap">
+    <div class="eyebrow-d">Der Weg</div>
+    <h2 class="s">Drei Phasen. Wachsende Wirkung.</h2>
+    <p class="lead">
+      Jede Phase hat ihren eigenen Wert, und jede öffnet die nächste. Sie müssen nicht
+      bei Null anfangen, und Sie müssen nicht alles auf einmal verändern. Der Einsatz wächst,
+      und die Wirkung wächst mit.
+    </p>
+
+    <div class="stages">
+
+      <div class="stage">
+        <div class="stage-num">1</div>
+        <div class="stage-body">
+          <div class="stage-label">Phase 1</div>
+          <div class="stage-title">Ich beobachte.</div>
+          <p class="stage-desc">
+            Sie lesen, schauen zu, fragen nach. Was kann KI wirklich, und was nicht?
+            Welche Werkzeuge gibt es, welche passen zu Ihrem Kontext, und was bedeutet
+            das konkret für Ihren Alltag? In dieser Phase baut sich das Fundament auf,
+            aus dem alle weiteren Schritte folgen.
+          </p>
+          <div class="stage-gains">
+            <div class="gains-label">Was Sie gewinnen</div>
+            <ul>
+              <li>Orientierung statt Rauschen</li>
+              <li>Ein realistisches Bild von Möglichkeiten und Grenzen</li>
+              <li>Informierte Entscheidungen, unabhängig von Technikanbietern</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-arrow">↓</div>
+
+      <div class="stage">
+        <div class="stage-num">2</div>
+        <div class="stage-body">
+          <div class="stage-label">Phase 2</div>
+          <div class="stage-title">Ich chatte.</div>
+          <p class="stage-desc">
+            Sie nutzen KI für konkrete Aufgaben: Texte, Zusammenfassungen, E-Mails,
+            erste Entwürfe. Sie merken, wo Zeit gespart wird, und wo nicht. Diese Phase
+            verändert die eigene Arbeitsweise, schrittweise, ohne Umbruch. Erste Routinen
+            entstehen von selbst.
+          </p>
+          <div class="stage-gains">
+            <div class="gains-label">Was Sie gewinnen</div>
+            <ul>
+              <li>Persönliche Zeitgewinne mit Werkzeugen, die Sie schon haben</li>
+              <li>Ein echtes Gefühl dafür, was KI kann und was nicht</li>
+              <li>Routinen, die sich von selbst festigen und weitergeben lassen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-arrow">↓</div>
+
+      <div class="stage">
+        <div class="stage-num">3</div>
+        <div class="stage-body">
+          <div class="stage-label">Phase 3</div>
+          <div class="stage-title">Ich baue.</div>
+          <p class="stage-desc">
+            Sie gestalten Systeme, die das ganze Team nutzen kann. Internes Wissen wird
+            in Ihrer eigenen Sprache festgehalten, bleibt lesbar, und wächst mit der
+            Organisation. Was Sie hier aufbauen, gehört Ihnen. Es folgt Ihnen, wohin
+            Sie auch gehen.
+          </p>
+          <div class="stage-gains">
+            <div class="gains-label">Was Sie gewinnen</div>
+            <ul>
+              <li>Wirkung auf Teamebene, nicht nur persönliche Tricks</li>
+              <li>Ein System, das sich selbst erklärt und weitergeführt werden kann</li>
+              <li>Portable Kompetenz, die bei jedem nächsten Schritt mehr wert wird</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL -->
+<section class="block alt">
+  <div class="wrap">
+    <div class="eyebrow-d">Was entsteht</div>
+    <h2 class="s">Strukturierte Lernformate werden gerade entwickelt.</h2>
+    <p class="lead" style="margin-bottom: 28px;">
+      Aus eigener Praxis, aus Kursformaten und aus der Arbeit mit Unternehmen entstehen
+      Workshops und Begleitprogramme für jede Phase. Keine fertigen Pakete, die Sie allein
+      lassen. Formate, die mit Ihnen entstehen.
+    </p>
+    <div class="signal">
+      <h3>Wer früh dabei ist, gestaltet mit.</h3>
+      <p>
+        Wenn Sie Interesse haben, melden Sie sich unten. Ich nehme mir Zeit für ein kurzes
+        Gespräch, um zu verstehen, wo Sie stehen und was für Sie sinnvoll wäre. Kein Pitch,
+        keine Agenda. Nur ein ehrliches Gespräch.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-block">
+  <div class="wrap">
+    <h2>Interesse? <span class="amber">Melden Sie sich.</span></h2>
+    <p class="sub">
+      Kein Newsletter, keine automatischen Mails. Ich melde mich persönlich,
+      wenn Formate für Ihre Phase verfügbar sind.
+    </p>
+    <form class="interest-form" id="interestForm">
+      <div class="field">
+        <label>Ihr Name</label>
+        <input type="text" name="name" placeholder="Vorname Nachname" required>
+      </div>
+      <div class="field">
+        <label>Ihre E-Mail</label>
+        <input type="email" name="email" placeholder="name@unternehmen.de" required>
+      </div>
+      <button class="btn-send" type="submit">Interesse bekunden</button>
+      <p class="note">Kein Spam. Kein Abo. Nur eine persönliche Nachricht von mir, wenn es soweit ist.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="footer-logo" href="index.html" aria-label="Step Into More">
+      <svg viewBox="0 0 210 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M178.1 67.5 A80 80 0 0 1 38.9 145.0" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <path d="M33.7 136.2 A80 80 0 0 1 136.3 26.4" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <circle cx="36.5" cy="140.5" r="5.2" stroke="currentColor" stroke-width="2.3" fill="none"/>
+        <path d="M174.9 31.3 L130.2 45.9 L166.8 55.7 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M154.6 52.4 L166.8 55.7 L161.1 72.8 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M78.13 85.81Q76.01 85.81 74.45 85.14Q72.88 84.47 72.00 83.22Q71.12 81.97 71.03 80.24H73.93Q74.03 81.27 74.60 81.95Q75.18 82.62 76.11 82.95Q77.03 83.28 78.11 83.28Q79.31 83.28 80.25 82.90Q81.19 82.52 81.73 81.83Q82.27 81.14 82.27 80.24Q82.27 79.41 81.80 78.88Q81.33 78.36 80.52 78.01Q79.71 77.66 78.69 77.39L76.47 76.78Q74.15 76.16 72.85 74.94Q71.55 73.72 71.55 71.78Q71.55 70.14 72.43 68.91Q73.32 67.68 74.83 67.01Q76.35 66.33 78.25 66.33Q80.20 66.33 81.68 67.01Q83.15 67.69 84.00 68.87Q84.84 70.05 84.89 71.56H82.06Q81.92 70.26 80.86 69.55Q79.80 68.84 78.19 68.84Q77.05 68.84 76.21 69.20Q75.36 69.56 74.90 70.19Q74.44 70.81 74.44 71.62Q74.44 72.51 74.99 73.06Q75.54 73.62 76.34 73.94Q77.13 74.26 77.85 74.45L79.68 74.94Q80.59 75.16 81.55 75.55Q82.50 75.94 83.32 76.56Q84.13 77.17 84.64 78.08Q85.14 78.99 85.14 80.27Q85.14 81.87 84.31 83.13Q83.49 84.38 81.92 85.10Q80.35 85.81 78.13 85.81Z M89.13 69.08V66.58H103.81V69.08H97.93V85.50H95.03V69.08Z M108.55 85.50V66.58H120.45V69.08H111.45V74.71H119.82V77.19H111.45V83.01H120.54V85.50Z M125.73 85.50V66.58H132.50Q134.69 66.58 136.15 67.39Q137.60 68.21 138.33 69.59Q139.06 70.98 139.06 72.72Q139.06 74.48 138.33 75.87Q137.60 77.26 136.14 78.07Q134.68 78.88 132.48 78.88H127.85V76.42H132.20Q133.59 76.42 134.46 75.94Q135.33 75.46 135.73 74.62Q136.13 73.79 136.13 72.72Q136.13 71.66 135.73 70.83Q135.33 70.01 134.45 69.53Q133.58 69.06 132.18 69.06H128.63V85.50Z" fill="currentColor"/>
+        <path d="M75.92 94.28V113.20H73.02V94.28Z M81.60 113.20V94.28H84.94L92.06 105.54Q92.41 106.10 92.86 106.88Q93.30 107.66 93.80 108.62Q94.30 109.59 94.78 110.74H94.42Q94.32 109.66 94.26 108.60Q94.20 107.53 94.17 106.61Q94.15 105.69 94.15 105.05V94.28H97.08V113.20H93.72L87.34 103.13Q86.83 102.30 86.34 101.47Q85.85 100.63 85.26 99.54Q84.67 98.44 83.82 96.86H84.28Q84.35 98.26 84.41 99.47Q84.47 100.69 84.50 101.62Q84.54 102.55 84.54 103.11V113.20Z M101.82 96.78V94.28H116.50V96.78H110.62V113.20H107.72V96.78Z M129.12 113.45Q126.67 113.45 124.74 112.29Q122.80 111.13 121.69 108.95Q120.58 106.78 120.58 103.75Q120.58 100.72 121.69 98.54Q122.80 96.37 124.74 95.20Q126.67 94.03 129.12 94.03Q131.57 94.03 133.50 95.20Q135.43 96.37 136.54 98.54Q137.65 100.72 137.65 103.75Q137.65 106.78 136.54 108.95Q135.43 111.13 133.50 112.29Q131.57 113.45 129.12 113.45ZM129.12 110.82Q130.74 110.82 132.01 110.01Q133.29 109.19 134.03 107.62Q134.77 106.04 134.77 103.75Q134.77 101.45 134.03 99.87Q133.29 98.29 132.01 97.48Q130.74 96.67 129.12 96.67Q127.50 96.67 126.22 97.48Q124.94 98.30 124.19 99.88Q123.45 101.46 123.45 103.75Q123.45 106.04 124.19 107.61Q124.94 109.18 126.22 110.00Q127.50 110.82 129.12 110.82Z" fill="currentColor"/>
+        <path d="M66.75 140.70V121.78H71.02L75.15 132.63Q75.32 133.12 75.54 133.86Q75.76 134.60 76.01 135.46Q76.25 136.32 76.47 137.16Q76.68 138.00 76.84 138.67H76.23Q76.40 138.03 76.62 137.20Q76.84 136.38 77.08 135.51Q77.32 134.64 77.55 133.88Q77.77 133.13 77.95 132.63L82.02 121.78H86.30V140.70H83.42V130.52Q83.42 129.93 83.43 129.12Q83.44 128.31 83.46 127.41Q83.49 126.50 83.51 125.57Q83.53 124.64 83.54 123.79H83.76Q83.50 124.72 83.20 125.70Q82.90 126.68 82.61 127.59Q82.33 128.51 82.07 129.27Q81.81 130.03 81.63 130.52L77.76 140.70H75.28L71.36 130.52Q71.18 130.04 70.93 129.29Q70.68 128.55 70.39 127.65Q70.09 126.74 69.79 125.75Q69.49 124.76 69.18 123.79H69.44Q69.46 124.57 69.48 125.48Q69.50 126.39 69.52 127.31Q69.54 128.23 69.55 129.06Q69.57 129.90 69.57 130.52V140.70Z M99.86 140.95Q97.41 140.95 95.48 139.79Q93.54 138.63 92.43 136.45Q91.32 134.28 91.32 131.25Q91.32 128.22 92.43 126.04Q93.54 123.87 95.48 122.70Q97.41 121.53 99.86 121.53Q102.31 121.53 104.24 122.70Q106.17 123.87 107.28 126.04Q108.39 128.22 108.39 131.25Q108.39 134.28 107.28 136.45Q106.17 138.63 104.24 139.79Q102.31 140.95 99.86 140.95ZM99.86 138.32Q101.48 138.32 102.75 137.51Q104.03 136.69 104.77 135.12Q105.51 133.54 105.51 131.25Q105.51 128.95 104.77 127.37Q104.03 125.79 102.75 124.98Q101.48 124.17 99.86 124.17Q98.24 124.17 96.96 124.98Q95.68 125.80 94.93 127.38Q94.19 128.96 94.19 131.25Q94.19 133.54 94.93 135.11Q95.68 136.68 96.96 137.50Q98.24 138.32 99.86 138.32Z M113.41 140.70V121.78H120.19Q122.38 121.78 123.83 122.54Q125.29 123.30 126.01 124.64Q126.74 125.98 126.74 127.73Q126.74 129.48 126.01 130.79Q125.28 132.11 123.82 132.83Q122.36 133.56 120.16 133.56H115.07V131.08H119.88Q121.28 131.08 122.14 130.68Q123.00 130.28 123.40 129.53Q123.81 128.78 123.81 127.73Q123.81 126.66 123.40 125.88Q123.00 125.11 122.13 124.69Q121.27 124.26 119.86 124.26H116.31V140.70ZM124.16 140.70 119.58 132.15H122.79L127.46 140.70Z M131.76 140.70V121.78H143.66V124.28H134.66V129.91H143.03V132.39H134.66V138.21H143.75V140.70Z" fill="currentColor"/>
+      </svg>
+    </a>
+    <div class="meta">
+      Joshua Baker · <a href="mailto:hello@stepintomore.co">hello@stepintomore.co</a><br>
+      +49 151 59057395 · <a href="index.html">stepintomore.co</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('interestForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+    var subject = encodeURIComponent('Lernformat-Interesse: ' + name);
+    var body = encodeURIComponent('Name: ' + name + '\nE-Mail: ' + email + '\n\nIch möchte informiert werden, wenn Lernformate verfügbar sind.');
+    window.location.href = 'mailto:hello@stepintomore.co?subject=' + subject + '&body=' + body;
+    form.innerHTML = '<div style="padding:28px 0;text-align:left">'
+      + '<div style="font-size:32px;margin-bottom:12px">&#10003;</div>'
+      + '<p style="color:#fff;font-size:17px;font-weight:700;margin-bottom:8px">Vielen Dank.</p>'
+      + '<p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.65">Ich melde mich persönlich, wenn etwas Passendes für Sie entsteht.</p>'
+      + '</div>';
+  });
+})();
+</script>
+</body>
+</html>

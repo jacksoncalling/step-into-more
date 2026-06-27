@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="17 12 176 176" role="img" aria-label="Step Into More">
+  <style>
+    .s { fill: none; stroke: #16181d; stroke-width: 2.3; }
+    @media (prefers-color-scheme: dark) { .s { stroke: #ffffff; } }
+  </style>
+  <path class="s" d="M178.1 67.5 A80 80 0 0 1 38.9 145.0" stroke-linecap="round"/>
+  <path class="s" d="M33.7 136.2 A80 80 0 0 1 136.3 26.4" stroke-linecap="round"/>
+  <circle class="s" cx="36.5" cy="140.5" r="5.2"/>
+  <path class="s" d="M174.9 31.3 L130.2 45.9 L166.8 55.7 Z" stroke-linejoin="round"/>
+  <path class="s" d="M154.6 52.4 L166.8 55.7 L161.1 72.8 Z" stroke-linejoin="round"/>
+</svg>

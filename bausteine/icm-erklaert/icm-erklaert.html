@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICM — KI in Ihrer Organisation, gesteuert durch Ordner und Klartext</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --daa-blue: #0077c8;
+    --daa-blue-dark: #005a9c;
+    --daa-blue-deeper: #003d6b;
+    --daa-yellow: #ffd100;
+    --daa-yellow-soft: #fff3b8;
+    --daa-gray-light: #f4f6f8;
+    --daa-gray: #e8edf2;
+    --daa-gray-border: #e2e8f0;
+    --daa-text: #1a2a3a;
+    --daa-text-mid: #3a4a5a;
+    --daa-text-light: #6a7a8a;
+    --green: #0f8a5f;
+    --green-bg: #ecfdf5;
+    --sim-ink: #141821;
+    --sim-accent: #ffd100;
+    --mono: 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--daa-text);
+    background: #fff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--daa-blue);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .daa-logo { display: flex; align-items: center; gap: 12px; }
+
+  .daa-logo-mark {
+    background: var(--daa-yellow);
+    color: var(--daa-blue-dark);
+    font-weight: 900;
+    font-size: 28px;
+    padding: 6px 14px;
+    letter-spacing: 2px;
+    border-radius: 2px;
+  }
+
+  .daa-tagline { font-size: 13px; font-weight: 500; opacity: 0.9; letter-spacing: 0.5px; }
+
+  .header-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .header-content { padding: 40px 48px 56px; position: relative; z-index: 2; max-width: 760px; }
+
+  .header-eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--daa-yellow); margin-bottom: 12px;
+  }
+
+  .header h1 { font-size: 38px; font-weight: 800; line-height: 1.18; margin-bottom: 10px; }
+  .header h1 span { color: var(--daa-yellow); }
+
+  .header-sub { font-size: 19px; font-weight: 400; opacity: 0.92; margin-bottom: 18px; }
+
+  .header-desc { font-size: 15px; line-height: 1.7; opacity: 0.85; max-width: 620px; }
+
+  .header-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 1; }
+
+  /* ── SECTION SHELL ── */
+  section { padding: 56px 48px; }
+  section.alt { background: var(--daa-gray-light); }
+
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--daa-blue); margin-bottom: 10px;
+  }
+
+  h2.sec-title {
+    font-size: 26px; font-weight: 800; color: var(--daa-blue-deeper);
+    line-height: 1.25; margin-bottom: 14px;
+  }
+
+  .lead { font-size: 16px; color: var(--daa-text-mid); line-height: 1.7; max-width: 720px; }
+  .lead strong { color: var(--daa-text); }
+
+  p.body { font-size: 15px; color: var(--daa-text-mid); line-height: 1.7; margin-top: 14px; max-width: 720px; }
+  p.body strong { color: var(--daa-text); }
+
+  /* ── ONE-LINE IDEA ── */
+  .idea-card {
+    background: var(--daa-blue-deeper);
+    color: #fff;
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-top: 28px;
+  }
+  .idea-card .idea-big { font-size: 22px; font-weight: 700; line-height: 1.4; }
+  .idea-card .idea-big span { color: var(--daa-yellow); }
+  .idea-card .idea-note { font-size: 14px; opacity: 0.82; margin-top: 14px; line-height: 1.65; }
+
+  /* ── ALREADY DOING THIS ── */
+  .already {
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+    background: var(--green-bg); border: 1px solid #bbf7d0; border-radius: 14px;
+    padding: 28px 32px; margin-top: 24px;
+  }
+  .already .check {
+    width: 52px; height: 52px; border-radius: 50%; background: var(--green); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0;
+  }
+  .already h3 { font-size: 17px; font-weight: 700; color: #0a6b49; margin-bottom: 6px; }
+  .already p { font-size: 14px; color: #1c5240; line-height: 1.6; }
+
+  /* ── PRINCIPLE GRID ── */
+  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .principle {
+    background: #fff; border: 1px solid var(--daa-gray); border-radius: 12px; padding: 24px 26px;
+  }
+  .principle .p-num {
+    width: 34px; height: 34px; border-radius: 9px; background: var(--daa-yellow);
+    color: var(--daa-blue-deeper); font-weight: 900; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .principle h4 { font-size: 16px; font-weight: 700; color: var(--daa-blue-deeper); margin-bottom: 8px; }
+  .principle p { font-size: 13.5px; color: var(--daa-text-mid); line-height: 1.6; }
+
+  /* ── LAYER DIAGRAM ── */
+  .layers { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+  .layer {
+    display: grid; grid-template-columns: 150px 1fr auto; gap: 20px; align-items: center;
+    border-radius: 10px; padding: 16px 22px; border: 1px solid var(--daa-gray);
+  }
+  .layer .l-name { font-weight: 700; font-size: 14px; }
+  .layer .l-file { font-family: var(--mono); font-size: 12px; opacity: 0.75; display: block; margin-top: 2px; font-weight: 400; }
+  .layer .l-q { font-size: 14px; color: var(--daa-text-mid); }
+  .layer .l-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 4px 12px;
+    border-radius: 20px; white-space: nowrap;
+  }
+  .layer.structural { background: #eef6fc; border-color: #cfe6f7; }
+  .layer.structural .l-name { color: var(--daa-blue-deeper); }
+  .layer.structural .l-tag { background: var(--daa-blue); color: #fff; }
+  .layer.content { background: #fffdf2; border-color: #f3e6a8; }
+  .layer.content .l-name { color: #8a6d00; }
+  .layer.content .l-tag { background: var(--daa-yellow); color: var(--daa-blue-deeper); }
+  .layer-legend { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+  .layer-legend span { font-size: 13px; color: var(--daa-text-light); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; }
+  .dot.blue { background: var(--daa-blue); }
+  .dot.yellow { background: var(--daa-yellow); }
+
+  /* ── ROUTING TABLE ── */
+  .routing-table {
+    width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 28px;
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--daa-gray); font-size: 14px;
+  }
+  .routing-table thead { background: var(--daa-blue); color: #fff; }
+  .routing-table th { padding: 14px 22px; text-align: left; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+  .routing-table td { padding: 13px 22px; border-bottom: 1px solid var(--daa-gray); vertical-align: middle; }
+  .routing-table tr:last-child td { border-bottom: none; }
+  .routing-table tr:nth-child(even) { background: #fff; }
+  .routing-table tr:nth-child(odd) { background: var(--daa-gray-light); }
+  .routing-table .arrow-col { color: var(--daa-blue); font-weight: 700; }
+  .routing-table .folder { font-family: var(--mono); font-size: 13px; color: var(--daa-blue-deeper); font-weight: 600; }
+
+  /* ── PROVIDER MAP ── */
+  .providers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .provider {
+    background: #fff; border: 1px solid var(--daa-gray); border-radius: 12px; padding: 24px; text-align: center;
+  }
+  .provider .pv-icon { font-size: 30px; margin-bottom: 10px; }
+  .provider .pv-name { font-size: 16px; font-weight: 700; color: var(--daa-blue-deeper); margin-bottom: 4px; }
+  .provider .pv-note { font-size: 13px; color: var(--daa-text-light); line-height: 1.5; }
+  .provider-foot { font-size: 14px; color: var(--daa-text-mid); margin-top: 18px; text-align: center; font-style: italic; }
+
+  /* ── FOLDER TREE ── */
+  .tree {
+    background: var(--sim-ink); color: #d7e2ee; border-radius: 14px; padding: 28px 30px; margin-top: 28px;
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.85; overflow-x: auto;
+  }
+  .tree .t-folder { color: #ffd86b; }
+  .tree .t-comment { color: #7d93a8; }
+  .tree .t-file { color: #b6e3c8; }
+  .tree .t-root { color: #fff; font-weight: 700; }
+
+  /* ── TOOLS ── */
+  .tools { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .tool {
+    background: #fff; border: 1px solid var(--daa-gray); border-radius: 14px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .tool .tool-head { background: var(--daa-blue); color: #fff; padding: 16px 22px; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+  .tool .tool-head .t-emoji { font-size: 18px; }
+  .tool .tool-body { padding: 20px 22px; }
+  .tool .tool-body p { font-size: 13.5px; color: var(--daa-text-mid); line-height: 1.6; }
+  .tool .tool-status { margin-top: 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tool .tool-status.live { color: var(--green); }
+  .tool .tool-status.soon { color: var(--daa-text-light); }
+
+  /* ── PEOPLE / HUMAN-CENTERED ── */
+  .people-intro { max-width: 720px; }
+  .people { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px; }
+  .person {
+    border-radius: 14px; padding: 26px 24px; border: 1px solid var(--daa-gray); background: #fff;
+  }
+  .person .who { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--daa-blue); margin-bottom: 10px; }
+  .person h4 { font-size: 17px; font-weight: 700; color: var(--daa-blue-deeper); margin-bottom: 10px; line-height: 1.3; }
+  .person p { font-size: 14px; color: var(--daa-text-mid); line-height: 1.65; }
+  .person.fragile { background: var(--daa-blue-deeper); border-color: var(--daa-blue-deeper); }
+  .person.fragile .who { color: var(--daa-yellow); }
+  .person.fragile h4 { color: #fff; }
+  .person.fragile p { color: rgba(255,255,255,0.86); }
+
+  .dignity {
+    margin-top: 30px; background: var(--daa-yellow-soft); border-left: 4px solid var(--daa-yellow);
+    border-radius: 8px; padding: 22px 26px;
+  }
+  .dignity p { font-size: 15px; color: var(--daa-text); line-height: 1.7; }
+  .dignity strong { color: var(--daa-blue-deeper); }
+
+  /* ── NEXT STEP ── */
+  .next {
+    background: var(--daa-blue-deeper); color: #fff; border-radius: 14px; padding: 36px 40px; margin-top: 8px;
+  }
+  .next h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .next h3 span { color: var(--daa-yellow); }
+  .next p { font-size: 15px; opacity: 0.88; line-height: 1.7; max-width: 680px; }
+  .next .next-row { display: flex; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
+  .next .next-pill {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 12px 18px; font-size: 13.5px;
+  }
+  .next .next-pill b { color: var(--daa-yellow); }
+
+  /* ── STEP INTO MORE BAND ── */
+  .sim-band {
+    background: linear-gradient(135deg, #141821 0%, #1f2733 100%);
+    color: #fff; padding: 0;
+  }
+  .sim-inner {
+    max-width: 960px; margin: 0 auto; padding: 48px;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  }
+  .sim-logo {
+    font-size: 40px; font-weight: 900; letter-spacing: -1px; line-height: 1; color: #fff;
+  }
+  .sim-logo .sim-more { color: var(--sim-accent); }
+  .sim-tagline { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 12px; letter-spacing: 0.5px; }
+  .sim-blurb { font-size: 13.5px; color: rgba(255,255,255,0.78); line-height: 1.7; margin-top: 16px; max-width: 460px; }
+  .sim-contact { text-align: right; }
+  .sim-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .sim-role { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 16px; letter-spacing: 0.5px; }
+  .sim-contact a, .sim-contact .sim-phone {
+    display: block; font-size: 15px; color: var(--sim-accent); text-decoration: none;
+    font-weight: 600; margin-bottom: 8px;
+  }
+  .sim-contact a:hover { text-decoration: underline; }
+  .sim-contact .sim-phone { color: #fff; }
+
+  /* ── DAA FOOTER STRIP ── */
+  .daa-strip {
+    background: #0a1018; color: rgba(255,255,255,0.55); padding: 18px 48px;
+    display: flex; justify-content: space-between; align-items: center; font-size: 12px;
+  }
+  .daa-strip .daa-logo-small {
+    background: var(--daa-yellow); color: var(--daa-blue-deeper); font-weight: 900;
+    font-size: 15px; padding: 3px 9px; border-radius: 2px; letter-spacing: 1px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    section, .header-top, .header-content, .sim-inner, .daa-strip { padding-left: 24px; padding-right: 24px; }
+    .header h1 { font-size: 28px; }
+    .principles, .providers, .tools, .people { grid-template-columns: 1fr; }
+    .layer { grid-template-columns: 1fr; gap: 8px; text-align: left; }
+    .layer .l-tag { justify-self: start; }
+    .already { grid-template-columns: 1fr; text-align: left; }
+    .sim-inner { grid-template-columns: 1fr; gap: 24px; }
+    .sim-contact { text-align: left; }
+    .sim-logo { font-size: 32px; }
+    .next .next-row { flex-direction: column; }
+  }
+
+  @media print {
+    body { font-size: 11pt; }
+    .principle, .tool, .person, .layer, .idea-card, .next, .sim-band { break-inside: avoid; }
+    .header, .idea-card, .next, .sim-band, .person.fragile, .tree {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="header">
+  <div class="header-top">
+    <div class="daa-logo">
+      <div class="daa-logo-mark">DAA</div>
+      <div class="daa-tagline">Bildung schafft Zukunft.</div>
+    </div>
+    <div class="header-badge">Hintergrund für die F&amp;E — Mai 2026</div>
+  </div>
+  <div class="header-content">
+    <div class="header-eyebrow">Interpretable Context Methodology (ICM)</div>
+    <h1>KI in Ihrer Organisation —<br><span>gesteuert durch Ordner und Klartext</span></h1>
+    <p class="header-sub">Keine neue Plattform. Keine Programmierung. Eine Methode, die mit Ihren bestehenden Werkzeugen arbeitet.</p>
+    <p class="header-desc">
+      Eine verständliche Einführung in die Methode hinter
+      dem KI-gestützten Coaching — was ICM ist, warum sie für Bildungsträger gut passt, und wie
+      eine Umsetzung mit Microsoft aussehen könnte. Im Zentrum stehen dabei nicht die Werkzeuge,
+      sondern die Menschen: Coaches, Mitarbeitende und Teilnehmende.
+    </p>
+  </div>
+  <svg class="header-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 60L60 52C120 44 240 28 360 24C480 20 600 28 720 32C840 36 960 36 1080 32C1200 28 1320 20 1380 16L1440 12V60H0Z" fill="#fff"/>
+  </svg>
+</header>
+
+<!-- ════════════════ THE CORE IDEA ════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Die Grundidee in einem Satz</div>
+    <h2 class="sec-title">Was, wenn die Ordnerstruktur selbst der KI sagt, was zu tun ist?</h2>
+    <p class="lead">
+      ICM (entwickelt von Jake van Clief, University of Edinburgh) dreht die übliche Logik um.
+      Statt KI-Verhalten in Software zu programmieren, wird es in <strong>Ordnern, nummerierten
+      Schritten und einfachen Textdateien</strong> festgehalten. Die KI liest die richtige Datei
+      im richtigen Moment — und weiß dadurch, welche Rolle sie in welchem Schritt spielt.
+    </p>
+
+    <div class="idea-card">
+      <div class="idea-big">
+        Die <span>Ordnerstruktur</span> ist die Steuerung.<br>
+        Die <span>Textdateien</span> sind die Anweisungen.<br>
+        Der <span>Mensch</span> entscheidet an jedem Schritt.
+      </div>
+      <div class="idea-note">
+        Was sonst ein Software-Framework im Code regeln würde — welcher Schritt wann kommt, welche
+        Information die KI bekommt, wo das Ergebnis landet — übernimmt hier die Anordnung der Ordner.
+        Alles bleibt lesbar, alles bleibt änderbar, von jeder Person mit einem Texteditor.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ YOU ALREADY WORK THIS WAY ════════════════ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-eyebrow">Warum das für die DAA besonders gut passt</div>
+    <h2 class="sec-title">Sie arbeiten bereits so — nur noch ohne KI</h2>
+    <p class="lead">
+      Bildungsträger organisieren ihre Arbeit seit jeher in Ordnern: pro Teilnehmer*in eine Akte,
+      Vorlagen an einem festen Platz, Protokolle nach Schritten sortiert. ICM verlangt also keine
+      neue Denkweise und kein Umlernen — es ist <strong>dieselbe Arbeitsweise, nur klüger angeordnet,
+      sodass eine KI mitlesen kann.</strong>
+    </p>
+
+    <div class="already">
+      <div class="check">&#10003;</div>
+      <div>
+        <h3>Geringe Hürde beim Einführen</h3>
+        <p>
+          Ihre Mitarbeitenden müssen keine Plattform erlernen und keine Oberfläche bedienen. Sie
+          legen Dateien in Ordner — wie immer. Der Unterschied: ein Leitfaden im Ordner sagt der KI,
+          was sie mit diesen Dateien tun soll. Die Veränderung ist klein, der Effekt ist groß.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOUR PRINCIPLES ════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Wie es funktioniert</div>
+    <h2 class="sec-title">Vier einfache Prinzipien</h2>
+    <p class="lead">ICM steht auf vier Ideen — jede davon kennt man aus dem ganz normalen Arbeitsalltag.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="p-num">1</div>
+        <h4>Ein Schritt, eine Aufgabe</h4>
+        <p>
+          Nummerierte Ordner (01, 02, 03 …) sind die Schritte. Jeder Ordner erledigt genau eine
+          Sache — Erstgespräch vorbereiten, Lebenslauf prüfen, Gespräch üben — und nicht alles auf
+          einmal. Das macht jeden Schritt überschaubar und überprüfbar.
+        </p>
+      </div>
+      <div class="principle">
+        <div class="p-num">2</div>
+        <h4>Klartext als Sprache</h4>
+        <p>
+          Die Anweisungen sind normale Textdateien in verständlichem Deutsch — keine Programmierung.
+          Wer einen Text bearbeiten kann, kann das Verhalten der KI anpassen: einen Ton ändern, eine
+          Regel ergänzen, einen Schritt umstellen.
+        </p>
+      </div>
+      <div class="principle">
+        <div class="p-num">3</div>
+        <h4>Nur der nötige Kontext</h4>
+        <p>
+          In jedem Schritt sieht die KI nur die Dateien, die zu diesem Schritt gehören — nicht den
+          ganzen Berg. Das hält die KI fokussiert, die Ergebnisse präziser und schützt nebenbei
+          sensible Daten, die woanders liegen.
+        </p>
+      </div>
+      <div class="principle">
+        <div class="p-num">4</div>
+        <h4>Der Mensch entscheidet</h4>
+        <p>
+          Zwischen zwei Schritten liegt immer eine Kontrollstelle. Die KI schlägt vor, der Mensch
+          prüft, korrigiert und gibt frei — erst dann geht es weiter. Nichts läuft unbeaufsichtigt durch.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ THE LAYERS ════════════════ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-eyebrow">Die Anordnung</div>
+    <h2 class="sec-title">Fünf Ebenen — von „Wo bin ich?“ bis „Womit arbeite ich?“</h2>
+    <p class="lead">
+      Damit die KI sich zurechtfindet, ist die Information in Ebenen geschichtet. Die oberen Ebenen
+      sind <strong>Wegweiser</strong> (sie lenken), die unteren sind <strong>Inhalt</strong>
+      (Wissen und Arbeitsmaterial). Die KI lädt immer nur, was sie gerade braucht.
+    </p>
+
+    <div class="layers">
+      <div class="layer structural">
+        <div class="l-name">Ebene 0 — Identität<span class="l-file">Anleitung.md</span></div>
+        <div class="l-q">„Wo bin ich?“ — In welchem Ordner stecke ich, was enthält er?</div>
+        <div class="l-tag">Wegweiser</div>
+      </div>
+      <div class="layer structural">
+        <div class="l-name">Ebene 1 — Routing<span class="l-file">CONTEXT.md</span></div>
+        <div class="l-q">„Wohin gehe ich?“ — Für diese Aufgabe ist Schritt X zuständig.</div>
+        <div class="l-tag">Wegweiser</div>
+      </div>
+      <div class="layer structural">
+        <div class="l-name">Ebene 2 — Der Schritt<span class="l-file">Schritt-Anleitung.md</span></div>
+        <div class="l-q">„Was tue ich?“ — Was lese ich, was mache ich, was schreibe ich?</div>
+        <div class="l-tag">Wegweiser</div>
+      </div>
+      <div class="layer content">
+        <div class="l-name">Ebene 3 — Wissen<span class="l-file">referenz/ …</span></div>
+        <div class="l-q">„Welche Regeln gelten?“ — Vorlagen, Bewerbungsstandards, Marktwissen. Bleibt stabil.</div>
+        <div class="l-tag">Inhalt</div>
+      </div>
+      <div class="layer content">
+        <div class="l-name">Ebene 4 — Arbeit<span class="l-file">ergebnisse/ …</span></div>
+        <div class="l-q">„Womit arbeite ich?“ — Der konkrete Fall: dieses Protokoll, dieser Lebenslauf. Ändert sich jedes Mal.</div>
+        <div class="l-tag">Inhalt</div>
+      </div>
+    </div>
+
+    <div class="layer-legend">
+      <span><span class="dot blue"></span> Wegweiser — lenken die KI (bleiben gleich)</span>
+      <span><span class="dot yellow"></span> Inhalt — Wissen (die „Fabrik“) und Arbeit (das „Produkt“)</span>
+    </div>
+
+    <p class="body">
+      <strong>Das Bild dazu:</strong> Ebene 3 ist die <em>Fabrik</em> — die Regeln und Vorlagen, die
+      einmal eingerichtet werden und immer gelten. Ebene 4 ist das <em>Produkt</em> — das, was die
+      Fabrik bei jedem Durchlauf neu herstellt. Ein gutes Rezept (Ebene 3) plus die jeweiligen
+      Zutaten (Ebene 4) ergibt jedes Mal ein passendes Ergebnis.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════ ROUTING ════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Routing — in normaler Sprache</div>
+    <h2 class="sec-title">„Ich möchte … → gehe zu …“</h2>
+    <p class="lead">
+      Das Herzstück ist eine schlichte Tabelle in einer Textdatei. Sie sagt der KI (und jedem
+      Menschen), welcher Ordner für welche Aufgabe zuständig ist. Mehr Steuerung braucht es nicht.
+    </p>
+
+    <table class="routing-table">
+      <thead>
+        <tr><th>Ich möchte …</th><th class="arrow-col"></th><th>Gehe zu Ordner</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ein Erstgespräch-Protokoll vorbereiten</td><td class="arrow-col">&#10132;</td><td class="folder">01_Erstgespräch/</td></tr>
+        <tr><td>Einen Lebenslauf strukturiert prüfen</td><td class="arrow-col">&#10132;</td><td class="folder">02_Bewerbungstool/</td></tr>
+        <tr><td>Auf ein Vorstellungsgespräch vorbereiten</td><td class="arrow-col">&#10132;</td><td class="folder">03_Interview-Coach/</td></tr>
+        <tr><td>Eine Marktbeobachtung festhalten</td><td class="arrow-col">&#10132;</td><td class="folder">Marktwissen/</td></tr>
+        <tr><td>Etwas an Teilnehmende übergeben</td><td class="arrow-col">&#10132;</td><td class="folder">Coachee-Ordner/</td></tr>
+      </tbody>
+    </table>
+    <p class="body">
+      <strong>Strukturierte Daten statt loser Notizen:</strong> Weil die Ergebnisse als geordnete
+      Textdateien (Markdown und JSON) abgelegt werden, kann der nächste Schritt sie sauber
+      weiterverarbeiten — und ein Mensch kann jederzeit hineinschauen. Kein verstecktes Format,
+      keine Blackbox, keine Bindung an ein bestimmtes Programm.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════ PROVIDER INDEPENDENCE ════════════════ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-eyebrow">Anbieter-unabhängig</div>
+    <h2 class="sec-title">Funktioniert mit den Werkzeugen, die Sie ohnehin nutzen</h2>
+    <p class="lead">
+      ICM ist eine <strong>Methode, keine Plattform</strong>. Die Ordner und Leitfäden funktionieren
+      mit jedem KI-Werkzeug, das Textdateien lesen kann. Ändert sich die Technik, ziehen die Ordner
+      einfach mit — kein Lock-in.
+    </p>
+
+    <div class="providers">
+      <div class="provider">
+        <div class="pv-icon">&#128194;</div>
+        <div class="pv-name">Microsoft 365</div>
+        <div class="pv-note">SharePoint / OneDrive<br>+ Copilot</div>
+      </div>
+      <div class="provider">
+        <div class="pv-icon">&#128172;</div>
+        <div class="pv-name">ChatGPT</div>
+        <div class="pv-note">Projekte<br>+ hochgeladene Dateien</div>
+      </div>
+      <div class="provider">
+        <div class="pv-icon">&#9670;</div>
+        <div class="pv-name">Anthropic Claude</div>
+        <div class="pv-note">Projekte<br>+ CLAUDE.md-Leitfaden</div>
+      </div>
+    </div>
+    <p class="provider-foot">Ein und derselbe Ordner läuft auf allen dreien. Sie wählen, was zu Ihrer IT passt.</p>
+  </div>
+</section>
+
+<!-- ════════════════ MICROSOFT SKETCH ════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">So könnte eine Umsetzung mit Microsoft aussehen</div>
+    <h2 class="sec-title">Eine SharePoint-Bibliothek, von Copilot gelesen</h2>
+    <p class="lead">
+      Das Folgende ist kein Installationshandbuch, sondern eine <strong>Skizze des Prinzips</strong>:
+      eine ganz normale SharePoint- oder OneDrive-Bibliothek, in der jeder Ordner ein Schritt ist und
+      jeder <span class="folder" style="font-family:var(--mono); font-size:13px;">.md</span>-Leitfaden
+      Copilot sagt, was zu tun ist. So sieht die Anordnung aus, die im Beispiel-Projekt „Job-Coach“
+      bereits gebaut wurde:
+    </p>
+
+    <div class="tree">
+<span class="t-root">Talentcenter/</span>  <span class="t-comment"># SharePoint-Bibliothek</span>
+├── <span class="t-file">00_Anleitung.md</span>          <span class="t-comment"># Ebene 0 — Copilot liest das zuerst</span>
+├── <span class="t-file">CONTEXT.md</span>               <span class="t-comment"># Ebene 1 — Routing: „Ich möchte … → gehe zu …“</span>
+├── <span class="t-folder">01_Erstgespräch/</span>
+│   ├── <span class="t-file">Anleitung.md</span>          <span class="t-comment"># Ebene 2 — was tun in diesem Schritt</span>
+│   ├── <span class="t-folder">Vorlagen/</span>             <span class="t-comment"># Ebene 3 — Protokoll-Vorlage (bleibt stabil)</span>
+│   └── <span class="t-folder">Ergebnisse/</span>           <span class="t-comment"># Ebene 4 — ausgefülltes Protokoll (pro Fall)</span>
+├── <span class="t-folder">02_Bewerbungstool/</span>       <span class="t-comment"># Lebenslauf strukturiert prüfen &amp; verbessern</span>
+├── <span class="t-folder">03_Interview-Coach/</span>      <span class="t-comment"># auf Vorstellungsgespräche vorbereiten</span>
+├── <span class="t-folder">Wissen/</span>                 <span class="t-comment"># Bewerbungsstandards, Arbeitsmarkt (Ebene 3)</span>
+└── <span class="t-folder">Coachee-Ordner/</span>          <span class="t-comment"># Übergabe an Teilnehmende</span>
+    </div>
+
+    <p class="body">
+      Eine Coachin öffnet den Ordner <span class="folder" style="font-family:var(--mono);font-size:13px;">01_Erstgespräch</span>,
+      bittet Copilot „bereite das Protokoll vor“ — und Copilot weiß aus dem Leitfaden, welche Vorlage
+      es nimmt, welche Fragen es stellt und wohin das Ergebnis kommt. Dieselbe Person, dieselbe
+      vertraute Ablage — nur dass jetzt eine KI mitarbeitet, ohne dass jemand eine neue Software lernen musste.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════ THE TOOLS ════════════════ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-eyebrow">Konkrete Werkzeuge — schon gebaut</div>
+    <h2 class="sec-title">Ordner, die man Coaches und Teilnehmenden in die Hand geben kann</h2>
+    <p class="lead">
+      Jeder dieser „Werkzeug-Ordner“ folgt genau dem ICM-Muster: ein Leitfaden, Vorlagen, ein
+      Ergebnis-Ordner. Sie laufen für den Coach — oder werden den Teilnehmenden zur eigenständigen
+      Weiterarbeit übergeben.
+    </p>
+
+    <div class="tools">
+      <div class="tool">
+        <div class="tool-head"><span class="t-emoji">&#127908;</span> Interview-Coach</div>
+        <div class="tool-body">
+          <p>
+            Bereitet Teilnehmende auf Vorstellungsgespräche vor: Fragen üben, Antworten schärfen,
+            Erfolgsgeschichten sammeln, Feedback erhalten. Ein vollständiger Ordner mit geführten
+            Befehlen — auch zur Übergabe geeignet.
+          </p>
+          <div class="tool-status live">&#9679; Fertig &amp; getestet</div>
+        </div>
+      </div>
+      <div class="tool">
+        <div class="tool-head"><span class="t-emoji">&#128196;</span> Bewerbungstool</div>
+        <div class="tool-body">
+          <p>
+            Hilft, Lebenslauf und Anschreiben auf eine konkrete Stelle zuzuschneiden — aus einem
+            Stamm-Profil und einer Sammlung eigener Geschichten. Strukturiert, ehrlich, ohne
+            Erfundenes — Lücken werden benannt, nicht kaschiert.
+          </p>
+          <div class="tool-status live">&#9679; In Nutzung</div>
+        </div>
+      </div>
+      <div class="tool">
+        <div class="tool-head"><span class="t-emoji">&#127881;</span> Coachee-Paket</div>
+        <div class="tool-body">
+          <p>
+            Ein persönlicher Übergabeordner zum Abschluss: Damit arbeiten Teilnehmende nach dem
+            Coaching eigenständig KI-gestützt weiter — Klarheit, die bleibt, statt im Aktenschrank
+            zu verschwinden.
+          </p>
+          <div class="tool-status soon">&#9675; In Vorbereitung</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ THE PEOPLE ════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Worauf es wirklich ankommt</div>
+    <h2 class="sec-title">Im Zentrum stehen Menschen — nicht die Technik</h2>
+    <p class="lead people-intro">
+      Eine Methode ist nur so gut wie das, was sie für die Menschen tut, die mit ihr arbeiten und
+      von ihr betroffen sind. ICM ist bewusst so gebaut, dass die KI im Hintergrund bleibt und der
+      Mensch im Vordergrund — gerade weil es hier um Personen in einer verletzlichen Lebenslage geht.
+    </p>
+
+    <div class="people">
+      <div class="person">
+        <div class="who">Die Coaches</div>
+        <h4>Behalten die Kontrolle, gewinnen Zeit</h4>
+        <p>
+          Die KI nimmt die Routine ab — vorbefüllen, strukturieren, vorbereiten. Was bleibt, ist mehr
+          Zeit für das, was nur ein Mensch kann: zuhören, ermutigen, begleiten. Der Coach gibt jeden
+          Schritt frei; die KI ersetzt sein Urteil nie.
+        </p>
+      </div>
+      <div class="person">
+        <div class="who">Die DAA-Mitarbeitenden</div>
+        <h4>Keine neue Software, keine Überforderung</h4>
+        <p>
+          Gearbeitet wird mit Ordnern und Dateien — wie bisher. Niemand muss eine fremde Oberfläche
+          lernen oder Angst vor einem undurchschaubaren System haben. Die Einführung trifft auf
+          vertrautes Terrain und damit auf geringen Widerstand.
+        </p>
+      </div>
+      <div class="person fragile">
+        <div class="who">Die Teilnehmenden</div>
+        <h4>Würde und Klarheit in einer fragilen Situation</h4>
+        <p>
+          Menschen im beruflichen Übergang sind oft verunsichert. Sie verdienen ein System, das
+          transparent ist und sie nicht zum Objekt einer undurchsichtigen Maschine macht. Jeder
+          Schritt ist sichtbar, nachvollziehbar, korrigierbar — keine Blackbox bei Menschen in
+          ohnehin sensibler Lage.
+        </p>
+      </div>
+    </div>
+
+    <div class="dignity">
+      <p>
+        <strong>Genau das ist die Stärke von ICM:</strong> Weil jedes Zwischenergebnis eine lesbare
+        Datei ist, ist nichts versteckt. Das deckt sich mit der Forderung des EU AI Act nach
+        menschlicher Aufsicht bei sensiblen Anwendungen — und vor allem mit dem, was Menschen in einer
+        unsicheren Lebensphase brauchen: das Gefühl, dass jemand mitschaut und sie nicht einer
+        Maschine ausgeliefert sind.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ NEXT STEP ════════════════ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="next">
+      <h3>Ein <span>Vorschlag</span>, kein Pitch</h3>
+      <p>
+        Das KI-gestützte Coaching auf Basis von ICM lässt sich klein und risikoarm ausprobieren —
+        kein Vertrag, keine Plattform-Entscheidung. Ein Gespräch darüber, wo in Ihrem Talentcenter
+        ein erster Ordner den größten Unterschied machen würde.
+      </p>
+      <div class="next-row">
+        <div class="next-pill"><b>1.</b>&nbsp; Kennenlernen — 30 Minuten: Wie arbeiten Ihre Teams heute?</div>
+        <div class="next-pill"><b>2.</b>&nbsp; Einen Werkzeug-Ordner gemeinsam ausprobieren</div>
+        <div class="next-pill"><b>3.</b>&nbsp; Auswerten: Hat es geholfen? Was fehlt?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STEP INTO MORE BAND ════════════════ -->
+<section class="sim-band">
+  <div class="sim-inner">
+    <div>
+      <div class="sim-logo">STEP<span class="sim-more"> INTO MORE</span></div>
+      <div class="sim-tagline">Builder · Facilitator · Guide at the edge</div>
+      <p class="sim-blurb">
+        Joshua Baker baut KI-Werkzeuge an der Schnittstelle von Mensch, Organisation und Technologie —
+        aus eigener Erfahrung im Karriereübergang und aus dem Bau von Produkten wie Limina und Terroir.
+        Diese Methode ist nicht theoretisch. Sie ist erprobt.
+      </p>
+    </div>
+    <div class="sim-contact">
+      <div class="sim-name">Joshua Baker</div>
+      <div class="sim-role">Step Into More</div>
+      <a href="https://portfolio.stepintomore.co">portfolio.stepintomore.co</a>
+      <a href="mailto:joshua@stepintomore.co">joshua@stepintomore.co</a>
+      <span class="sim-phone">+49 151 59057395</span>
+    </div>
+  </div>
+</section>
+
+<div class="daa-strip">
+  <div class="daa-logo-small">DAA</div>
+  <div>Erstellt von Step Into More — in Zusammenarbeit mit dem Individuellen Talentcenter Aachen · Stand 05/2026</div>
+</div>
+
+</body>
+</html>

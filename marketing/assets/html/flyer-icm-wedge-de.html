@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step Into More · KI, die für Sie arbeitet (Flyer)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --ink: #16181d;
+    --ink-soft: #2a2e36;
+    --paper: #faf7f1;
+    --paper-line: #ece5d8;
+    --amber: #e8a33d;       /* solar gold */
+    --amber-deep: #c47e1e;
+    --text: #20242b;
+    --text-mid: #4d535d;
+    --text-light: #7a818c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* A5 trim 148x210mm + 3mm bleed all around = 154x216mm */
+  @page { size: 154mm 216mm; margin: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: #d8d4cc;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 154mm;
+    min-height: 216mm;
+    margin: 0 auto;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .page + .page { margin-top: 8mm; }
+
+  /* ── FRONT ── */
+  .front { color: var(--text); }
+
+  .masthead {
+    background: var(--ink);
+    color: #fff;
+    padding: 15mm 15mm 10mm;
+    position: relative;
+    text-align: center;
+  }
+  .masthead .logo-mark { color: #fff; display: inline-block; }
+  .masthead .logo-mark svg { width: auto; height: 82px; display: block; }
+  .tagline { font-size: 10.5px; color: rgba(255,255,255,0.6); margin-top: 9px; letter-spacing: 1px; }
+
+  .hero { padding: 11mm 15mm 8mm; flex: 1; }
+  .eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--amber-deep); margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: 22px; font-weight: 800; line-height: 1.2; color: var(--ink); margin-bottom: 14px;
+  }
+  .hero h1 .amber { color: var(--amber-deep); }
+  .hero .lead { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 12px; }
+  .hero .turn { font-size: 13px; color: var(--ink); line-height: 1.6; margin-bottom: 14px; }
+  .hero .turn b { color: var(--amber-deep); font-weight: 700; }
+
+  .origin {
+    border-left: 3px solid var(--amber); padding: 10px 0 10px 14px; margin-bottom: 4px;
+    font-size: 14.5px; color: var(--ink); line-height: 1.65;
+  }
+  .origin b { color: var(--amber-deep); }
+
+  .front-foot {
+    background: var(--amber); color: var(--ink); padding: 7mm 15mm 10mm; font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .front-foot .small { font-size: 11px; font-weight: 600; opacity: 0.8; }
+
+  /* ── BACK ── */
+  .back { padding: 15mm; }
+  .back h2 {
+    font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--amber);
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
+  .step { display: grid; grid-template-columns: 26px 1fr; gap: 11px; align-items: start; }
+  .step .n {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;
+  }
+  .step h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 1px; }
+  .step p { font-size: 11.5px; color: var(--text-mid); line-height: 1.5; }
+
+  .for-whom {
+    background: #fff; border: 1px solid var(--paper-line); border-radius: 9px;
+    padding: 12px 15px; margin-bottom: 12px;
+  }
+  .for-whom h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--amber-deep); margin-bottom: 6px; }
+  .for-whom p { font-size: 12px; color: var(--text-mid); line-height: 1.55; }
+
+  .privacy {
+    font-size: 11px; color: var(--text-light); line-height: 1.5; margin-bottom: 14px;
+    padding-left: 20px; position: relative;
+  }
+  .privacy::before { content: '\1F512'; position: absolute; left: 0; top: 0; }
+
+  .cta {
+    background: var(--ink); color: #fff; border-radius: 11px; padding: 14px 16px; margin-top: auto;
+  }
+  .cta .cta-line { font-size: 13.5px; font-weight: 700; margin-bottom: 3px; }
+  .cta .cta-line .amber { color: var(--amber); }
+  .cta .cta-note { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+  .cta-contact { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .cta-contact .lines { font-size: 12px; line-height: 1.7; }
+  .cta-contact .lines .name { font-weight: 700; color: #fff; }
+  .cta-contact .lines a { color: var(--amber); text-decoration: none; font-weight: 600; }
+  .cta-contact .lines .phone { color: #fff; }
+  .qr {
+    width: 88px; height: 88px; border-radius: 8px; background: #fff; flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .back-mark { margin-top: 11px; text-align: center; font-size: 9.5px; color: var(--text-light); letter-spacing: 0.5px; }
+  .back-mark b { color: var(--ink); }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ FRONT ════════ -->
+<div class="page front">
+  <div class="masthead">
+    <div class="logo-mark">
+      <svg viewBox="0 0 210 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Step Into More">
+        <path d="M178.1 67.5 A80 80 0 0 1 38.9 145.0" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <path d="M33.7 136.2 A80 80 0 0 1 136.3 26.4" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+        <circle cx="36.5" cy="140.5" r="5.2" stroke="currentColor" stroke-width="2.3" fill="none"/>
+        <path d="M174.9 31.3 L130.2 45.9 L166.8 55.7 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M154.6 52.4 L166.8 55.7 L161.1 72.8 Z" stroke="currentColor" stroke-width="2.3" fill="none" stroke-linejoin="round"/>
+        <path d="M78.13 85.81Q76.01 85.81 74.45 85.14Q72.88 84.47 72.00 83.22Q71.12 81.97 71.03 80.24H73.93Q74.03 81.27 74.60 81.95Q75.18 82.62 76.11 82.95Q77.03 83.28 78.11 83.28Q79.31 83.28 80.25 82.90Q81.19 82.52 81.73 81.83Q82.27 81.14 82.27 80.24Q82.27 79.41 81.80 78.88Q81.33 78.36 80.52 78.01Q79.71 77.66 78.69 77.39L76.47 76.78Q74.15 76.16 72.85 74.94Q71.55 73.72 71.55 71.78Q71.55 70.14 72.43 68.91Q73.32 67.68 74.83 67.01Q76.35 66.33 78.25 66.33Q80.20 66.33 81.68 67.01Q83.15 67.69 84.00 68.87Q84.84 70.05 84.89 71.56H82.06Q81.92 70.26 80.86 69.55Q79.80 68.84 78.19 68.84Q77.05 68.84 76.21 69.20Q75.36 69.56 74.90 70.19Q74.44 70.81 74.44 71.62Q74.44 72.51 74.99 73.06Q75.54 73.62 76.34 73.94Q77.13 74.26 77.85 74.45L79.68 74.94Q80.59 75.16 81.55 75.55Q82.50 75.94 83.32 76.56Q84.13 77.17 84.64 78.08Q85.14 78.99 85.14 80.27Q85.14 81.87 84.31 83.13Q83.49 84.38 81.92 85.10Q80.35 85.81 78.13 85.81Z M89.13 69.08V66.58H103.81V69.08H97.93V85.50H95.03V69.08Z M108.55 85.50V66.58H120.45V69.08H111.45V74.71H119.82V77.19H111.45V83.01H120.54V85.50Z M125.73 85.50V66.58H132.50Q134.69 66.58 136.15 67.39Q137.60 68.21 138.33 69.59Q139.06 70.98 139.06 72.72Q139.06 74.48 138.33 75.87Q137.60 77.26 136.14 78.07Q134.68 78.88 132.48 78.88H127.85V76.42H132.20Q133.59 76.42 134.46 75.94Q135.33 75.46 135.73 74.62Q136.13 73.79 136.13 72.72Q136.13 71.66 135.73 70.83Q135.33 70.01 134.45 69.53Q133.58 69.06 132.18 69.06H128.63V85.50Z" fill="currentColor"/>
+        <path d="M75.92 94.28V113.20H73.02V94.28Z M81.60 113.20V94.28H84.94L92.06 105.54Q92.41 106.10 92.86 106.88Q93.30 107.66 93.80 108.62Q94.30 109.59 94.78 110.74H94.42Q94.32 109.66 94.26 108.60Q94.20 107.53 94.17 106.61Q94.15 105.69 94.15 105.05V94.28H97.08V113.20H93.72L87.34 103.13Q86.83 102.30 86.34 101.47Q85.85 100.63 85.26 99.54Q84.67 98.44 83.82 96.86H84.28Q84.35 98.26 84.41 99.47Q84.47 100.69 84.50 101.62Q84.54 102.55 84.54 103.11V113.20Z M101.82 96.78V94.28H116.50V96.78H110.62V113.20H107.72V96.78Z M129.12 113.45Q126.67 113.45 124.74 112.29Q122.80 111.13 121.69 108.95Q120.58 106.78 120.58 103.75Q120.58 100.72 121.69 98.54Q122.80 96.37 124.74 95.20Q126.67 94.03 129.12 94.03Q131.57 94.03 133.50 95.20Q135.43 96.37 136.54 98.54Q137.65 100.72 137.65 103.75Q137.65 106.78 136.54 108.95Q135.43 111.13 133.50 112.29Q131.57 113.45 129.12 113.45ZM129.12 110.82Q130.74 110.82 132.01 110.01Q133.29 109.19 134.03 107.62Q134.77 106.04 134.77 103.75Q134.77 101.45 134.03 99.87Q133.29 98.29 132.01 97.48Q130.74 96.67 129.12 96.67Q127.50 96.67 126.22 97.48Q124.94 98.30 124.19 99.88Q123.45 101.46 123.45 103.75Q123.45 106.04 124.19 107.61Q124.94 109.18 126.22 110.00Q127.50 110.82 129.12 110.82Z" fill="currentColor"/>
+        <path d="M66.75 140.70V121.78H71.02L75.15 132.63Q75.32 133.12 75.54 133.86Q75.76 134.60 76.01 135.46Q76.25 136.32 76.47 137.16Q76.68 138.00 76.84 138.67H76.23Q76.40 138.03 76.62 137.20Q76.84 136.38 77.08 135.51Q77.32 134.64 77.55 133.88Q77.77 133.13 77.95 132.63L82.02 121.78H86.30V140.70H83.42V130.52Q83.42 129.93 83.43 129.12Q83.44 128.31 83.46 127.41Q83.49 126.50 83.51 125.57Q83.53 124.64 83.54 123.79H83.76Q83.50 124.72 83.20 125.70Q82.90 126.68 82.61 127.59Q82.33 128.51 82.07 129.27Q81.81 130.03 81.63 130.52L77.76 140.70H75.28L71.36 130.52Q71.18 130.04 70.93 129.29Q70.68 128.55 70.39 127.65Q70.09 126.74 69.79 125.75Q69.49 124.76 69.18 123.79H69.44Q69.46 124.57 69.48 125.48Q69.50 126.39 69.52 127.31Q69.54 128.23 69.55 129.06Q69.57 129.90 69.57 130.52V140.70Z M99.86 140.95Q97.41 140.95 95.48 139.79Q93.54 138.63 92.43 136.45Q91.32 134.28 91.32 131.25Q91.32 128.22 92.43 126.04Q93.54 123.87 95.48 122.70Q97.41 121.53 99.86 121.53Q102.31 121.53 104.24 122.70Q106.17 123.87 107.28 126.04Q108.39 128.22 108.39 131.25Q108.39 134.28 107.28 136.45Q106.17 138.63 104.24 139.79Q102.31 140.95 99.86 140.95ZM99.86 138.32Q101.48 138.32 102.75 137.51Q104.03 136.69 104.77 135.12Q105.51 133.54 105.51 131.25Q105.51 128.95 104.77 127.37Q104.03 125.79 102.75 124.98Q101.48 124.17 99.86 124.17Q98.24 124.17 96.96 124.98Q95.68 125.80 94.93 127.38Q94.19 128.96 94.19 131.25Q94.19 133.54 94.93 135.11Q95.68 136.68 96.96 137.50Q98.24 138.32 99.86 138.32Z M113.41 140.70V121.78H120.19Q122.38 121.78 123.83 122.54Q125.29 123.30 126.01 124.64Q126.74 125.98 126.74 127.73Q126.74 129.48 126.01 130.79Q125.28 132.11 123.82 132.83Q122.36 133.56 120.16 133.56H115.07V131.08H119.88Q121.28 131.08 122.14 130.68Q123.00 130.28 123.40 129.53Q123.81 128.78 123.81 127.73Q123.81 126.66 123.40 125.88Q123.00 125.11 122.13 124.69Q121.27 124.26 119.86 124.26H116.31V140.70ZM124.16 140.70 119.58 132.15H122.79L127.46 140.70Z M131.76 140.70V121.78H143.66V124.28H134.66V129.91H143.03V132.39H134.66V138.21H143.75V140.70Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="tagline">Builder · Facilitator · Guide at the edge</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Kommt Ihnen das bekannt vor?</div>
+    <h1>Ihre KI gibt Antworten aus dem Internet. Und <span class="amber">vergisst Sie</span> nach jedem Gespräch.</h1>
+    <p class="lead">Ständig neue Modelle, neue Funktionen, kaum hinterherzukommen. Und am Ende kennt die KI Ihr Unternehmen trotzdem nicht und gibt generische oder erfundene Antworten. Kein Wunder, dass viele im Team lieber abwarten.</p>
+    <p class="turn">Ich führe Sie und Ihr Team da durch. Gemeinsam bauen wir KI, die Ihre Sprache spricht, Ihre vorhandenen Werkzeuge nutzt und sich <b>das Wissen Ihrer Leute merkt</b>. Aus dem Fremden, der täglich neu anfängt, wird eine Kollegin, die Ihr Haus kennt.</p>
+    <div class="origin">
+      Vor 20 Jahren habe ich Menschen mit über 400 Solaranlagen die Kontrolle über ihre
+      <b>eigene Energie</b> gegeben. Heute geht es um Ihre <b>eigene Intelligenz</b>.
+    </div>
+  </div>
+
+  <div class="front-foot">
+    <span>Vorschlag, kein Pitch.</span>
+    <span class="small">30 Minuten. Unverbindlich.</span>
+  </div>
+</div>
+
+<!-- ════════ BACK ════════ -->
+<div class="page back">
+  <h2>So funktioniert's</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <div><h4>Kennenlernen</h4><p>30 Minuten: Wie arbeiten Sie und Ihr Team heute mit KI? Was nervt, was fehlt?</p></div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div><h4>Ausprobieren</h4><p>Wir richten einen ersten Ordner ein, datenschutzkonform, und testen ihn an echter Arbeit.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div><h4>Auswerten</h4><p>Hat es geholfen? Was funktioniert, was fehlt? Sie entscheiden, wie es weitergeht.</p></div>
+    </div>
+  </div>
+
+  <div class="for-whom" style="margin-bottom:10px">
+    <h4>100% Personalisiert</h4>
+    <p>Die KI greift nicht auf allgemeines Internetwissen zurück, sondern wird durch Ihre Textdateien so
+    konfiguriert, dass sie wie ein <strong>interner Mitarbeiter</strong> agiert, der Ihre Prozesse
+    in- und auswendig kennt.</p>
+  </div>
+
+  <div class="for-whom">
+    <h4>Für wen</h4>
+    <p>Kleine &amp; mittlere Unternehmen · öffentliche Verwaltung · Bildungs- und Coaching-Träger.
+    Überall dort, wo viel Wissens- und Dokumentenarbeit anfällt und KI bisher nur zufällig genutzt wird.</p>
+  </div>
+
+  <p class="privacy">
+    Datenschutz von Anfang an mitgedacht: nur der nötige Kontext, alles nachvollziehbar,
+    nichts läuft unbeaufsichtigt. Gemeinsam mit Ihrer IT bzw. Ihrer/Ihrem Datenschutzbeauftragten.
+  </p>
+
+  <div class="cta">
+    <div class="cta-line">Lassen Sie uns sprechen. <span class="amber">Unverbindlich.</span></div>
+    <div class="cta-note">Ein Gespräch, ob ein erster Schritt zu Ihnen passt.</div>
+    <div class="cta-contact">
+      <div class="lines">
+        <div class="name">Joshua Baker · Step Into More</div>
+        <a href="https://stepintomore.co">stepintomore.co</a><br>
+        <a href="mailto:hello@stepintomore.co">hello@stepintomore.co</a><br>
+        <span class="phone">+49 151 59057395</span>
+      </div>
+      <div class="qr"><img src="data:image/png;base64,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" alt="QR stepintomore.co" style="width:100%;height:100%;border-radius:5px;display:block;object-fit:contain;"></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

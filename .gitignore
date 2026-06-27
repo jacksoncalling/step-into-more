@@ -1,0 +1,45 @@
+# =====================================================================
+#  STEP INTO MORE — PRIVATE consulting HQ
+#  ⚠️  THIS REPO CONTAINS CONFIDENTIAL CLIENT DATA (clients/).
+#  ⚠️  ONLY ever connect it to a PRIVATE remote. NEVER push to a public repo.
+#  The Comp#8 / public submission is a SEPARATE, sanitized repo.
+# =====================================================================
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Secrets & credentials — never commit
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials*.json
+service-account*.json
+
+# Node / build artifacts (if any tooling lands here)
+node_modules/
+dist/
+build/
+
+# Local scratch
+*.tmp
+~$*
+
+# --- Private: real prospect/client data (PII / DSGVO) — keep OUT of the public repo ---
+business-dev/lead-research/01_finden/ergebnisse/
+business-dev/lead-research/03_ansprache/ergebnisse/
+business-dev/lead-research/04_antwort/ergebnisse/
+business-dev/lead-research/05_termin/ergebnisse/
+business-dev/lead-research/output/pipeline-board.private.html
+business-dev/warm-network/ergebnisse/*
+!business-dev/warm-network/ergebnisse/README.md
+clients/daa/
+HANDOFF.md

@@ -1,0 +1,13 @@
+{
+  "name": "flyer-print",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Render the ICM flyer HTML to 300dpi print-ready JPEGs with 3mm bleed",
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "puppeteer-core": "^23.0.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.33.5"
+  }
+}
