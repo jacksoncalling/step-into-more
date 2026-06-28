@@ -32,7 +32,7 @@ your voice, canon, offers, segments, and first contacts, one step at a time.
 
 ## See it
 - Live: [ace-client-finder.lovable.app](https://ace-client-finder.lovable.app)
-- Demo video: (link coming)
+- Demo video: [youtu.be/gcOJM968BKk](https://youtu.be/gcOJM968BKk)
 
 ## A note on privacy
 The public repo carries the system and the method. Real prospect and client data (names, addresses, the live board) stays private and out of this repo by design. The pipeline you see here shows role and organisation only.
